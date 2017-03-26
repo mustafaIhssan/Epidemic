@@ -9,7 +9,6 @@ public class PlayerDeck : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		deck = Cities.GetDeck();
-		
 	}
 	
 	// Update is called once per frame
@@ -25,7 +24,7 @@ public class PlayerDeck : MonoBehaviour {
 
 	   return red;
    }
-   void OnMouseDown2()
+   public void Draw()
    {
 	   //if not empty, spawn a new card on top, with offset?
 	   if (deck.Count > 0)

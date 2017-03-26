@@ -155,9 +155,14 @@ public class Common : MonoBehaviour {
                 Debug.Log("nothing selected by mouse");
 			}
             else {
-				//onMouseDown/Drag
+				//onMouseDown
                 Debug.Log(mouseSelection.gameObject);
-				MouseDrag(mouseSelection);
+				//MouseDrag(mouseSelection);
+				var deck = mouseSelection.GetComponent<PlayerDeck>();
+				if (deck != null)
+				{
+					deck.Draw();
+				}
 			}
         } else if (Input.GetMouseButton(0)) 
 		{
@@ -174,6 +179,8 @@ public class Common : MonoBehaviour {
 	void MouseDrag(GameObject obj)
 	{
 		if (obj == null) return;
+		if (obj.tag == "NoDrag") return;
+
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         point.z = obj.transform.position.z;
         Cursor.visible = false;
