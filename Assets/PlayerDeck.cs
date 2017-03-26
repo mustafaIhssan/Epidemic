@@ -41,8 +41,8 @@ public class PlayerDeck : MonoBehaviour {
 			   GameObject cardType = GetCardByType(type);// = GameObject.Find(type);
 			   var newCard = Instantiate(cardType, transform.position, transform.rotation);
 			   newCard.transform.Translate(new Vector3(0,0,1));
-			   var newOrder = SortingOrder.GetOrder();
-			   newCard.GetComponent<SpriteRenderer>().sortingOrder = newOrder;
+			   var newOrder = newCard.GetComponent<Card>().SetTopMost();
+
 			   Debug.Log("Spawned a new card with order # " + newOrder);
 		   }
 

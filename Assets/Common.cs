@@ -6,7 +6,7 @@ using System;
 
 public static class SortingOrder {
 	static int order = 4;
-	public static int GetOrder() {
+	public static int GetNewTop() {
 		order += 1;
 		return order;
 	}
@@ -189,10 +189,8 @@ public class Common : MonoBehaviour {
         {
             firstClicked = false;
 
-            //render card as top most
-            SpriteRenderer render = obj.GetComponent<SpriteRenderer>();
-            render.sortingOrder = SortingOrder.GetOrder();
-
+			obj.GetComponent<Card>().SetTopMost();
+            
             //remember offset so card doesn't jump to cursor location
             offset = obj.transform.position - point;
         }

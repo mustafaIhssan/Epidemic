@@ -29,7 +29,7 @@ public class DragMe : MonoBehaviour
             firstClicked = false;
 
             //render card as top most
-            render.sortingOrder = SortingOrder.GetOrder();
+            render.sortingOrder = SortingOrder.GetNewTop();
 
             //remember offset so card doesn't jump to cursor location
             offset = gameObject.transform.position - point;
