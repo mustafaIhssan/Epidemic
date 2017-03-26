@@ -14,7 +14,10 @@ public class DragMe : MonoBehaviour
         render = GetComponent<SpriteRenderer>();
         firstClicked = true;
     }
-    void OnMouseDrag()
+    void OnMouseDown2() {
+        //do nothing, to override corresponding function in deck
+    }
+    void OnMouseDrag2()
     {
 		//Debug.Log("on mouse drag");
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -35,10 +38,11 @@ public class DragMe : MonoBehaviour
         gameObject.transform.position = point + offset;
     }
 
-    void OnMouseUp()
+    void OnMouseUp2()
     {
         firstClicked = true;
 		//Debug.Log("on mouse up");
         Cursor.visible = true;
     }
+    
 }

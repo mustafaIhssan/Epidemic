@@ -25,7 +25,7 @@ public class PlayerDeck : MonoBehaviour {
 
 	   return red;
    }
-   void OnMouseDown()
+   void OnMouseDown2()
    {
 	   //if not empty, spawn a new card on top, with offset?
 	   if (deck.Count > 0)
@@ -41,6 +41,7 @@ public class PlayerDeck : MonoBehaviour {
 			   //spawn a city card
 			   GameObject cardType = GetCardByType(type);// = GameObject.Find(type);
 			   var newCard = Instantiate(cardType, transform.position, transform.rotation);
+			   newCard.transform.Translate(new Vector3(0,0,1));
 			   var newOrder = SortingOrder.GetOrder();
 			   newCard.GetComponent<SpriteRenderer>().sortingOrder = newOrder;
 			   Debug.Log("Spawned a new card with order # " + newOrder);

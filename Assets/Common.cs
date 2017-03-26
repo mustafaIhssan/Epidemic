@@ -7,7 +7,8 @@ using System;
 public static class SortingOrder {
 	static int order = 4;
 	public static int GetOrder() {
-		return order++;
+		order += 1;
+		return order;
 	}
 
 }
@@ -132,13 +133,88 @@ public static class Cities {
 }
 public class Common : MonoBehaviour {
 
+    Vector3 offset;
+    bool firstClicked;
+	GameObject mouseSelection;
 	// Use this for initialization
 	void Start () {
-		
+        firstClicked = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+	void FixedUpdate () 
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            mouseSelection = CheckForObjectUnderMouse();
+            if(mouseSelection == null)
+			{
+                Debug.Log("nothing selected by mouse");
+			}
+            else {
+				//onMouseDown/Drag
+                Debug.Log(mouseSelection.gameObject);
+				MouseDrag(mouseSelection);
+			}
+        } else if (Input.GetMouseButton(0)) 
+		{
+				MouseDrag(mouseSelection);
+		} else {
+            //onMouseUp
+			if (firstClicked == false)
+                Debug.Log("mouse up!");
+            Cursor.visible = true;
+            firstClicked = true;
+			mouseSelection = null;
+		}
+    }
+	void MouseDrag(GameObject obj)
+	{
+		if (obj == null) return;
+        Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        point.z = obj.transform.position.z;
+        Cursor.visible = false;
+
+        if (firstClicked)
+        {
+            firstClicked = false;
+
+            //render card as top most
+            SpriteRenderer render = obj.GetComponent<SpriteRenderer>();
+            render.sortingOrder = SortingOrder.GetOrder();
+
+            //remember offset so card doesn't jump to cursor location
+            offset = obj.transform.position - point;
+        }
+
+        obj.transform.position = point + offset;
+    }
+    private GameObject CheckForObjectUnderMouse()
+    {
+        Vector2 touchPostion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        RaycastHit2D[] allCollidersAtTouchPosition = Physics2D.RaycastAll(touchPostion, Vector2.zero);
+
+        SpriteRenderer closest = null; //Cache closest sprite reneder so we can assess sorting order
+        foreach(RaycastHit2D hit in allCollidersAtTouchPosition)
+        {
+            if(closest == null) // if there is no closest assigned, this must be the closest
+            {
+                closest = hit.collider.gameObject.GetComponent<SpriteRenderer>();
+                continue;
+            }
+
+            var hitSprite = hit.collider.gameObject.GetComponent<SpriteRenderer>();
+
+            if(hitSprite == null)
+                continue; //If the object has no sprite go on to the next hitobject
+
+            if(hitSprite.sortingOrder > closest.sortingOrder)
+                closest = hitSprite;
+        }
+
+        return closest != null ? closest.gameObject : null;
+    }
 }
