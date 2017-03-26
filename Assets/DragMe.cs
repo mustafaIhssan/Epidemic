@@ -3,22 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 
  
-[RequireComponent(typeof(SphereCollider))]
+[RequireComponent(typeof(BoxCollider2D))]
  
 public class DragMe : MonoBehaviour
 {
+    SpriteRenderer render;
+    Vector3 offset;
+    bool firstClicked;
+    void Start() {
+        render = GetComponent<SpriteRenderer>();
+        firstClicked = true;
+    }
     void OnMouseDrag()
     {
-		Debug.Log("on mouse drag");
+		//Debug.Log("on mouse drag");
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         point.z = gameObject.transform.position.z;
-        gameObject.transform.position = point;
         Cursor.visible = false;
+        
+        if (firstClicked)
+        {
+            firstClicked = false;
+
+            //render card as top most
+            render.sortingOrder = SortingOrder.GetOrder();
+
+            //remember offset so card doesn't jump to cursor location
+            offset = gameObject.transform.position - point;
+        }
+
+        gameObject.transform.position = point + offset;
     }
-   
+
     void OnMouseUp()
     {
-		Debug.Log("on mouse up");
+        firstClicked = true;
+		//Debug.Log("on mouse up");
         Cursor.visible = true;
     }
 }
