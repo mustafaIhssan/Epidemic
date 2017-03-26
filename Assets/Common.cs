@@ -43,10 +43,10 @@ public static class Cities {
 
 		for (int i = 0; i < 17; i++)
             Shuffle(ref cities);
-#if false
+#if true
         foreach (var city in cities) {
 			var type = GetType(city);
-			Debug.Log(type);
+			Debug.Log(type + ": " + city);
 		}
 #endif
         return cities;

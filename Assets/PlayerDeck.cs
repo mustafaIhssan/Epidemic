@@ -35,13 +35,16 @@ public class PlayerDeck : MonoBehaviour {
 		   Debug.Log("Got a card: " + cardDrawn + " and type: " + type);
 		   if (type == "invalid")
 		   {
+			   Debug.Log("invalid type");
 			   //TODO epidemic or special event card
 		   } else {
 			   //spawn a city card
 			   GameObject cardType = GetCardByType(type);// = GameObject.Find(type);
 			   var newCard = Instantiate(cardType, transform.position, transform.rotation);
-			   newCard.transform.Translate(new Vector3(0,0,1));
+			   newCard.transform.Translate(new Vector3(0,0,-1));
 			   var newOrder = newCard.GetComponent<Card>().SetTopMost();
+			   var txtObj = newCard.transform.FindChild("text");
+			   txtObj.GetComponent<TextMesh>().text = cardDrawn;
 
 			   Debug.Log("Spawned a new card with order # " + newOrder);
 		   }
