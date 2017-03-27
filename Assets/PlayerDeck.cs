@@ -7,7 +7,11 @@ public class PlayerDeck : MonoBehaviour {
 	List<string> deck;
 	public GameObject red, blue, black, yellow;
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
+		InitDeck();
+	}
+	public List<string> GetDeck() { return deck; }
+	public void InitDeck() {
 		deck = Cities.GetDeck();
 	}
 	
@@ -24,7 +28,8 @@ public class PlayerDeck : MonoBehaviour {
 
 	   return red;
    }
-   public void Draw()
+   public void Draw() { Draw(deck); }
+   public void Draw(List<string> deck)
    {
 	   //if not empty, spawn a new card on top, with offset?
 	   if (deck.Count > 0)

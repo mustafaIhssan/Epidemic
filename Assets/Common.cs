@@ -43,12 +43,21 @@ public class Common : MonoBehaviour {
 			}
             else {
 				//onMouseDown
-                Debug.Log(mouseSelection.gameObject);
+                Debug.Log("picked: " + mouseSelection.gameObject);
 				//MouseDrag(mouseSelection);
 				var deck = mouseSelection.GetComponent<PlayerDeck>();
 				if (deck != null)
 				{
 					deck.Draw();
+					return;
+				}
+				var infectDeck = mouseSelection.GetComponent<InfectDeck>();
+				if (infectDeck != null)
+				{
+					Debug.Log("Got infect deck");
+					PlayerDeck bDeck = infectDeck;
+					bDeck.Draw();
+					return;
 				}
 				if (mouseSelection.transform.parent.name == "Cities")
 				{
