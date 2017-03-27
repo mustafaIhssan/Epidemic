@@ -37,6 +37,7 @@ public class Common : MonoBehaviour {
 	void Update () {
 		
 	}
+	GameObject selectedCity; //only set when a color has been changed
 	void FixedUpdate () 
     {
         if(Input.GetMouseButtonDown(0))
@@ -51,26 +52,27 @@ public class Common : MonoBehaviour {
                 Debug.Log("picked: " + mouseSelection.gameObject);
 				//MouseDrag(mouseSelection);
 				var deck = mouseSelection.GetComponent<PlayerDeck>();
+				var infectDeck = mouseSelection.GetComponent<InfectDeck>();
 				if (deck != null)
 				{
 					deck.Draw();
 					return;
 				}
-				var infectDeck = mouseSelection.GetComponent<InfectDeck>();
-				if (infectDeck != null)
+				else if (infectDeck != null)
 				{
 					Debug.Log("Got infect deck");
 					PlayerDeck bDeck = infectDeck;
 					bDeck.Draw();
-					return;
 				}
-				if (mouseSelection.tag == "InfectCity") 
+				else if (mouseSelection.tag == "InfectCity") 
 				{
 					InfectCity();
-
 				}
-				if (mouseSelection.transform.parent.name == "Cities")
+				else if (mouseSelection.transform.parent.name == "Cities")
 				{
+					var sr = mouseSelection.GetComponent<SpriteRenderer>();
+					selectedCity = mouseSelection;
+					sr.color = new Color(.1f, 1f, .1f, 1f); //bright green
 					Debug.Log("clicked on city: " + mouseSelection.name);
 					var neighbors = cg.GetNeighbors(mouseSelection);
 					foreach (var node in neighbors) {
@@ -81,13 +83,19 @@ public class Common : MonoBehaviour {
         } else if (Input.GetMouseButton(0)) 
 		{
 				MouseDrag(mouseSelection);
-		} else {
-            //onMouseUp
-			if (firstClicked == false)
-                Debug.Log("mouse up!");
+        }
+        else //if (Input.GetMouseButtonUp(0))
+        {
+			if (selectedCity != null)
+			{
+				Debug.Log("changing city color back to white");
+                var sr = selectedCity.GetComponent<SpriteRenderer>();
+                sr.color = Color.white;
+			}
             Cursor.visible = true;
             firstClicked = true;
 			mouseSelection = null;
+			selectedCity = null;
 		}
     }
 	void InfectCity()

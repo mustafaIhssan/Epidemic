@@ -17,14 +17,11 @@ public class Node {
 		{
 			Debug.Log(obj.name + " trying to add invalid node given");
 		}
-		//Debug.Log(obj.name + "->" + newNode.obj.name);
+		Debug.Log(obj.name + "->" + newNode.obj.name);
 		if (!links.Contains(newNode))
             links.Add(newNode);
 	}
 	public void Add(Node newNode) {
-		if (addCount++ > 50) 
-			return;
-
         AddOneWay(newNode);
 		//Debug.Log("reverse link: " + newNode.obj.name + "->" + obj.name );
 		newNode.AddOneWay(this);
@@ -98,6 +95,7 @@ public class CityGraph : MonoBehaviour {
 		cities["Mexico City"].Add(cities["Lima"]);
 		cities["Mexico City"].Add(cities["Miami"]);
 
+		cities["Bogota"].Add(cities["Miami"]);
 		cities["Bogota"].Add(cities["Lima"]);
 		cities["Bogota"].Add(cities["Buenos Aires"]);
 		cities["Bogota"].Add(cities["Sao Paulo"]);
@@ -109,8 +107,8 @@ public class CityGraph : MonoBehaviour {
 		cities["Buenos Aires"].Add(cities["Sao Paulo"]);
 		cities["Buenos Aires"].Add(cities["Johannesburg"]);
 
-		cities["Lagos"].Add(cities["Lagos"]);
-		cities["Lagos"].Add(cities["Madrid"]);
+		cities["Lagos"].Add(cities["Khartoum"]);
+		cities["Lagos"].Add(cities["Kinshasa"]);
 
 		cities["Kinshasa"].Add(cities["Khartoum"]);
 		cities["Kinshasa"].Add(cities["Johannesburg"]);
@@ -191,6 +189,7 @@ public class CityGraph : MonoBehaviour {
 		cities["Jakarta"].Add(cities["Sydney"]);
 
 		cities["Manila"].Add(cities["Ho Chi Minh City"]);
+		cities["Manila"].Add(cities["Taipei"]);
 		cities["Manila"].Add(cities["Sydney"]);
 	}
 }
