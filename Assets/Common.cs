@@ -16,14 +16,19 @@ public static class SortingOrder {
 
 public class Common : MonoBehaviour {
 
+	public GameObject dRed, dYellow, dBlue, dBlack;
     Vector3 offset;
     bool firstClicked;
 	GameObject mouseSelection;
 	CityGraph cg;
+	GameObject cities;
 	// Use this for initialization
 	void Start () {
         firstClicked = true;
-		cg = GameObject.Find("Cities").GetComponent<CityGraph>();
+		cities = GameObject.Find("Cities");
+		if (cities == null)
+			Debug.Log("Can't find Cities!?!");
+		cg = cities.GetComponent<CityGraph>();
 		if (cg == null)
 			Debug.Log("Can't find citygraph!?!");
 	}
@@ -59,6 +64,11 @@ public class Common : MonoBehaviour {
 					bDeck.Draw();
 					return;
 				}
+				if (mouseSelection.tag == "InfectCity") 
+				{
+					InfectCity();
+
+				}
 				if (mouseSelection.transform.parent.name == "Cities")
 				{
 					Debug.Log("clicked on city: " + mouseSelection.name);
@@ -79,6 +89,37 @@ public class Common : MonoBehaviour {
             firstClicked = true;
 			mouseSelection = null;
 		}
+    }
+	void InfectCity()
+	{
+        //draw an infect card, move card to discard pile
+        //infect city
+        string target = "Madrid";
+        string type = Cities.GetType(target);
+        GameObject diseaseType;
+        if (type == "blue") diseaseType = dBlue;
+        else if (type == "red") diseaseType = dRed;
+        else if (type == "black") diseaseType = dBlack;
+        else if (type == "yellow") diseaseType = dYellow;
+        else diseaseType = dRed;
+
+        //find location to spawn
+        GameObject targetCity = null;
+        foreach (Transform tCity in cities.transform)
+        {
+            if (tCity.gameObject.name == target)
+            {
+                //found location
+                targetCity = tCity.gameObject;
+            }
+        }
+        if (targetCity == null)
+        {
+            Debug.Log("can't find city to infect??");
+            return;
+        }
+        var newDisease = Instantiate(diseaseType, targetCity.transform.position, targetCity.transform.rotation);
+        newDisease.transform.parent = targetCity.transform;
     }
 	void MouseDrag(GameObject obj)
 	{

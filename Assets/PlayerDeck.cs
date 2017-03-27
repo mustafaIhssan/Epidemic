@@ -28,14 +28,34 @@ public class PlayerDeck : MonoBehaviour {
 
 	   return red;
    }
-   public void Draw() { Draw(deck); }
-   public void Draw(List<string> deck)
+   //auto remove card from deck
+   public virtual GameObject Draw() { 
+	   var ret = Draw(deck, 0);
+	   if (deck.Count > 0)
+	   {
+		   deck.RemoveAt(deck.Count-1);
+	   }
+	   return ret;
+   }
+   public GameObject Draw(int lastOffset) {
+	   var ret = Draw(deck, lastOffset);
+        if (deck.Count > 0)
+	   {
+		   deck.RemoveAt(deck.Count-1);
+	   }
+	   return ret;
+   }
+   public string GetNameOfCard(GameObject obj) {
+        var txtObj = obj.transform.FindChild("text");
+        return txtObj.GetComponent<TextMesh>().text;
+   }
+   public GameObject Draw(List<string> deck, int lastOffset)
    {
 	   //if not empty, spawn a new card on top, with offset?
 	   if (deck.Count > 0)
 	   {
 		   //spawn a new card on top
-		   var cardDrawn = deck[deck.Count-1];
+		   var cardDrawn = deck[deck.Count-1-lastOffset];
 		   var type = Cities.GetType(cardDrawn);
 		   Debug.Log("Got a card: " + cardDrawn + " and type: " + type);
 		   if (type == "invalid")
@@ -52,14 +72,15 @@ public class PlayerDeck : MonoBehaviour {
 			   txtObj.GetComponent<TextMesh>().text = cardDrawn;
 
 			   Debug.Log("Spawned a new card with order # " + newOrder);
+			   return newCard;
 		   }
-
-		   //optional: just remember "top of deck" and leave deck unmodified
-		   deck.RemoveAt(deck.Count-1);
+	   } else { //trying to draw from an empty deck, game over?
+	   		//TODO game ending mechanic
 	   }
 	   if (deck.Count == 0)
 	   {
 	   	    //TODO if deck is empty, show blank texture
 	   }
+	   return null;
    }
 }

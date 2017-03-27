@@ -2501,11 +2501,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4395795554003932, guid: 809fc9cfeb64d4a39933454d6ffb4aee, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.54
+      value: -7.06
       objectReference: {fileID: 0}
     - target: {fileID: 4395795554003932, guid: 809fc9cfeb64d4a39933454d6ffb4aee, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.15
+      value: 2.91
       objectReference: {fileID: 0}
     - target: {fileID: 4395795554003932, guid: 809fc9cfeb64d4a39933454d6ffb4aee, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2540,9 +2540,44 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 0.95
       objectReference: {fileID: 0}
+    - target: {fileID: 102385150862881974, guid: 809fc9cfeb64d4a39933454d6ffb4aee,
+        type: 2}
+      propertyPath: m_Text
+      value: Spawn 3 infections
+      objectReference: {fileID: 0}
+    - target: {fileID: 1136422962711538, guid: 809fc9cfeb64d4a39933454d6ffb4aee, type: 2}
+      propertyPath: m_TagString
+      value: InfectCity
+      objectReference: {fileID: 0}
+    - target: {fileID: 1136422962711538, guid: 809fc9cfeb64d4a39933454d6ffb4aee, type: 2}
+      propertyPath: m_Name
+      value: InfectCity
+      objectReference: {fileID: 0}
+    - target: {fileID: 212926338984183124, guid: 809fc9cfeb64d4a39933454d6ffb4aee,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ce99335ceb6ab4174a4b9cf1bf0d5b23,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 809fc9cfeb64d4a39933454d6ffb4aee, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1287582368 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1855339462270748, guid: 809fc9cfeb64d4a39933454d6ffb4aee,
+    type: 2}
+  m_PrefabInternal: {fileID: 1287582367}
+--- !u!114 &1287582369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1287582368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 826e535da732c4b8db86d0bcfea1d9b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1300765089
 GameObject:
   m_ObjectHideFlags: 0
@@ -4576,6 +4611,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0620867c225a345b3b396536eb73cf0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dRed: {fileID: 1146741429930728, guid: 722a3bc7aa3f4474f9a510865233a8f2, type: 2}
+  dYellow: {fileID: 1166940591972516, guid: b4b301305f641416ab9ea10e779ea9bb, type: 2}
+  dBlue: {fileID: 1710394369705412, guid: e9cc0939f6064465fbfaade19c4ff753, type: 2}
+  dBlack: {fileID: 1224222659870146, guid: db25ab44ff8a04acf8ca1dd359e9f4b6, type: 2}
 --- !u!4 &2001628316
 Transform:
   m_ObjectHideFlags: 0
@@ -4997,7 +5036,7 @@ GameObject:
   - component: {fileID: 2108201796}
   m_Layer: 0
   m_Name: infectDec
-  m_TagString: Untagged
+  m_TagString: NoDrag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5032,7 +5071,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: d1776b2e84f8049d49cfe4b3e3a5dd13, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5044,7 +5083,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2108201792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.41, y: 3.38, z: 0}
+  m_LocalPosition: {x: 3.41, y: 3.38, z: 1}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

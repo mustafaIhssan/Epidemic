@@ -14,13 +14,16 @@ public static class Cities {
 		
 		return types;
 	}
-	static void Shuffle(ref List<string> deck) {
-		for (int i = 0; i < deck.Count; i++)
+	public static void Shuffle(ref List<string> deck, int iterations) {
+        for (int it = 0; it < iterations; it++)
         {
-            string temp = deck[i];
-            int randomIndex = UnityEngine.Random.Range(i, deck.Count);
-            deck[i] = deck[randomIndex];
-            deck[randomIndex] = temp;
+            for (int i = 0; i < deck.Count; i++)
+            {
+                string temp = deck[i];
+                int randomIndex = UnityEngine.Random.Range(i, deck.Count);
+                deck[i] = deck[randomIndex];
+                deck[randomIndex] = temp;
+            }
         }
 	}
 	public static List<string> GetDeck() {
@@ -32,8 +35,7 @@ public static class Cities {
 		cities.AddRange(yellow);
 		cities.AddRange(black);
 
-		for (int i = 0; i < 17; i++)
-            Shuffle(ref cities);
+        Shuffle(ref cities, 17);
 #if false
         foreach (var city in cities) {
 			var type = GetType(city);

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - NoDrag
+  - InfectCity
   layers:
   - Default
   - TransparentFX
