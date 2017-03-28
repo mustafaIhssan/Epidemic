@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4620420974421242}
   - component: {fileID: 212661582734571566}
   - component: {fileID: 61876899902670094}
+  - component: {fileID: 50721200449354394}
+  - component: {fileID: 114742921853217348}
   m_Layer: 0
   m_Name: disease_yellow
   m_TagString: Untagged
@@ -41,6 +43,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50721200449354394
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1166940591972516}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 10
+  m_LinearDrag: 5
+  m_AngularDrag: 0.1
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!61 &61876899902670094
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -55,6 +77,18 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1.44, y: 1.84}
+--- !u!114 &114742921853217348
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1166940591972516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 836386f00d95d41198756766a23cbb24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pullSource: {fileID: 0}
 --- !u!212 &212661582734571566
 SpriteRenderer:
   m_ObjectHideFlags: 1

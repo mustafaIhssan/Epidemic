@@ -22,6 +22,7 @@ public class Common : MonoBehaviour {
 	GameObject mouseSelection;
 	CityGraph cg;
 	GameObject cities;
+	GameObject pullMe, pullSource;
 	// Use this for initialization
 	void Start () {
         firstClicked = true;
@@ -34,12 +35,52 @@ public class Common : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
 		
-	}
 	GameObject selectedCity; //only set when a color has been changed
-	void FixedUpdate () 
+	void Update () 
     {
+		MouseUpdate();
+		//PullAnimation();
+	}
+    bool beginPA = true;
+	float beginTime;
+	Vector2 vel;
+	void PullAnimation()
+	{
+		if (pullMe == null || pullSource == null) 
+		{
+			beginPA = true;
+			return;
+		} else {
+			//Debug.Log("starting animation!");
+		}
+		//set start time
+		if (beginPA) 
+		{
+			Debug.Log("pull animation beginning!");
+			beginPA = false;
+			beginTime = Time.time;
+			//vel = Vector3.zero;
+		}
+		//check t < 3sec
+		if (Time.time - beginTime > 3f)
+		{
+			pullMe = null;
+			pullSource = null;
+			//vel = Vector3.zero;
+			Debug.Log("animation ended with time " + (Time.time - beginTime).ToString());
+			return;
+		}
+		//pull to center
+		var dir = pullSource.transform.position - pullMe.transform.position;
+		var dist2 = dir.sqrMagnitude;
+		vel = dir.normalized * 8f *dist2;
+		if (dist2 > .02f)
+            pullMe.GetComponent<Rigidbody2D>().velocity = vel;
+            //pullMe.transform.position += vel * Time.deltaTime;
+	}
+	void MouseUpdate()
+	{
         if(Input.GetMouseButtonDown(0))
         {
             mouseSelection = CheckForObjectUnderMouse();
@@ -78,6 +119,9 @@ public class Common : MonoBehaviour {
 					foreach (var node in neighbors) {
 						Debug.Log("Neighbor: " + node.GetObj().name);
 					}
+					//testing
+					var cube = GameObject.Find("disease_blue");
+					InfectCity(mouseSelection.name);
 				}
 			}
         } else if (Input.GetMouseButton(0)) 
@@ -98,11 +142,11 @@ public class Common : MonoBehaviour {
 			selectedCity = null;
 		}
     }
-	void InfectCity()
+	void InfectCity(string target = "Milan")
 	{
         //draw an infect card, move card to discard pile
         //infect city
-        string target = "Madrid";
+        //string target = "Madrid";
         string type = Cities.GetType(target);
         GameObject diseaseType;
         if (type == "blue") diseaseType = dBlue;
@@ -126,8 +170,17 @@ public class Common : MonoBehaviour {
             Debug.Log("can't find city to infect??");
             return;
         }
-        var newDisease = Instantiate(diseaseType, targetCity.transform.position, targetCity.transform.rotation);
+		var cityPosition = targetCity.transform.position;
+		//add offset to position
+		float x = (float)UnityEngine.Random.Range(-30, 30);
+		x = x / 3f + Mathf.Sign(x) * 20f;
+		float y = (float)UnityEngine.Random.Range(-30, 30);
+		y = y / 3f + Mathf.Sign(y) * 20f;
+		cityPosition += new Vector3(x/100f, y/100f, 0);
+        var newDisease = Instantiate(diseaseType, cityPosition, targetCity.transform.rotation);
         newDisease.transform.parent = targetCity.transform;
+		pullMe = newDisease;
+		pullMe.GetComponent<Attraction>().pullSource = targetCity;
     }
 	void MouseDrag(GameObject obj)
 	{

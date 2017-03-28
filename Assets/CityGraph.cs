@@ -37,7 +37,7 @@ public class CityGraph : MonoBehaviour {
 	void Start () {
 		dummy = new Node(transform.gameObject);
         //get list of all cities
-		Debug.Log("Cities has " + transform.GetChildCount());
+		Debug.Log("Cities has " + transform.childCount);
         foreach (Transform tChild in transform) {
 			var child = tChild.gameObject;
 			if (child == null)
