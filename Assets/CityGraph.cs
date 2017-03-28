@@ -6,11 +6,11 @@ public class Node {
 	public Node (GameObject o) {
 		obj = o;
 		links = new List<Node>();
+		hasOutbreak = false;
 	}
 	public List<Node> GetNeighbors() {
 		return links;
 	}
-	static int addCount = 0;
 	public void AddOneWay(Node newNode) {
         //if not already there?
         if (newNode == null)
@@ -29,6 +29,7 @@ public class Node {
 	public GameObject GetObj() { return obj; }
 	List<Node> links;
 	GameObject obj;
+	public bool hasOutbreak;
 }
 public class CityGraph : MonoBehaviour {
 	Dictionary<string, Node> cities = new Dictionary<string, Node>();
@@ -53,13 +54,25 @@ public class CityGraph : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		foreach(var item in cities)
+		{
+			item.Value.hasOutbreak = false;
+		}
 	}
 
 	public List<Node> GetNeighbors(GameObject input) {
-		var node = cities[input.name];
+		return GetNeighbors(input.name);
+	}
+	public List<Node> GetNeighbors(string name) {
+		var node = cities[name];
+		if (node == null) {
+			Debug.Log("can't find target city to get neighbors");
+			return null;
+		}
 		return node.GetNeighbors();
-
+	}
+	public Node GetNode(string name) {
+		return cities[name];
 	}
 	void InitGraph() {
 		

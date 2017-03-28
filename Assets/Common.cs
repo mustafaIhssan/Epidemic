@@ -22,7 +22,6 @@ public class Common : MonoBehaviour {
 	GameObject mouseSelection;
 	CityGraph cg;
 	GameObject cities;
-	GameObject pullMe, pullSource;
 	// Use this for initialization
 	void Start () {
         firstClicked = true;
@@ -42,43 +41,7 @@ public class Common : MonoBehaviour {
 		MouseUpdate();
 		//PullAnimation();
 	}
-    bool beginPA = true;
-	float beginTime;
-	Vector2 vel;
-	void PullAnimation()
-	{
-		if (pullMe == null || pullSource == null) 
-		{
-			beginPA = true;
-			return;
-		} else {
-			//Debug.Log("starting animation!");
-		}
-		//set start time
-		if (beginPA) 
-		{
-			Debug.Log("pull animation beginning!");
-			beginPA = false;
-			beginTime = Time.time;
-			//vel = Vector3.zero;
-		}
-		//check t < 3sec
-		if (Time.time - beginTime > 3f)
-		{
-			pullMe = null;
-			pullSource = null;
-			//vel = Vector3.zero;
-			Debug.Log("animation ended with time " + (Time.time - beginTime).ToString());
-			return;
-		}
-		//pull to center
-		var dir = pullSource.transform.position - pullMe.transform.position;
-		var dist2 = dir.sqrMagnitude;
-		vel = dir.normalized * 8f *dist2;
-		if (dist2 > .02f)
-            pullMe.GetComponent<Rigidbody2D>().velocity = vel;
-            //pullMe.transform.position += vel * Time.deltaTime;
-	}
+	
 	void MouseUpdate()
 	{
         if(Input.GetMouseButtonDown(0))
@@ -91,7 +54,6 @@ public class Common : MonoBehaviour {
             else {
 				//onMouseDown
                 Debug.Log("picked: " + mouseSelection.gameObject);
-				//MouseDrag(mouseSelection);
 				var deck = mouseSelection.GetComponent<PlayerDeck>();
 				var infectDeck = mouseSelection.GetComponent<InfectDeck>();
 				if (deck != null)
@@ -107,7 +69,7 @@ public class Common : MonoBehaviour {
 				}
 				else if (mouseSelection.tag == "InfectCity") 
 				{
-					InfectCity();
+					InfectCity("Madrid", 3);
 				}
 				else if (mouseSelection.transform.parent.name == "Cities")
 				{
@@ -121,7 +83,7 @@ public class Common : MonoBehaviour {
 					}
 					//testing
 					var cube = GameObject.Find("disease_blue");
-					InfectCity(mouseSelection.name);
+					InfectCity(mouseSelection, 1);
 				}
 			}
         } else if (Input.GetMouseButton(0)) 
@@ -136,25 +98,15 @@ public class Common : MonoBehaviour {
                 var sr = selectedCity.GetComponent<SpriteRenderer>();
                 sr.color = Color.white;
 			}
+			//clean up
             Cursor.visible = true;
             firstClicked = true;
 			mouseSelection = null;
 			selectedCity = null;
 		}
     }
-	void InfectCity(string target = "Milan")
+	void InfectCity(string target = "Milan", int infectCount=1)
 	{
-        //draw an infect card, move card to discard pile
-        //infect city
-        //string target = "Madrid";
-        string type = Cities.GetType(target);
-        GameObject diseaseType;
-        if (type == "blue") diseaseType = dBlue;
-        else if (type == "red") diseaseType = dRed;
-        else if (type == "black") diseaseType = dBlack;
-        else if (type == "yellow") diseaseType = dYellow;
-        else diseaseType = dRed;
-
         //find location to spawn
         GameObject targetCity = null;
         foreach (Transform tCity in cities.transform)
@@ -165,22 +117,71 @@ public class Common : MonoBehaviour {
                 targetCity = tCity.gameObject;
             }
         }
+		InfectCity(targetCity, infectCount);
+	}
+	void InfectCity(GameObject targetCity, int infectCount=1, string type=null)
+	{
         if (targetCity == null)
         {
             Debug.Log("can't find city to infect??");
             return;
         }
+		
+        //draw an infect card, move card to discard pile
+        //infect city
+        //string target = "Madrid";
+		if (type == null)
+            type = Cities.GetType(targetCity.name);
+
+        GameObject diseaseType;
+        if (type == "blue") diseaseType = dBlue;
+        else if (type == "red") diseaseType = dRed;
+        else if (type == "black") diseaseType = dBlack;
+        else if (type == "yellow") diseaseType = dYellow;
+        else diseaseType = dRed;
+
+        //check number of infections already in city
+        int diseaseCount = 0;
+		foreach (Transform tChild in targetCity.transform)
+		{
+			if (tChild.gameObject.tag == "disease" 
+				&& tChild.gameObject.name.Contains("disease_"+type))
+			{
+				diseaseCount++;
+			}
+		}
+
+        bool outbreak = ((diseaseCount + infectCount) > 3);
+		if ((3 - diseaseCount) < infectCount)
+		{
+			infectCount = 3 - diseaseCount;
+		}
+        
 		var cityPosition = targetCity.transform.position;
-		//add offset to position
-		float x = (float)UnityEngine.Random.Range(-30, 30);
-		x = x / 3f + Mathf.Sign(x) * 20f;
-		float y = (float)UnityEngine.Random.Range(-30, 30);
-		y = y / 3f + Mathf.Sign(y) * 20f;
-		cityPosition += new Vector3(x/100f, y/100f, 0);
-        var newDisease = Instantiate(diseaseType, cityPosition, targetCity.transform.rotation);
-        newDisease.transform.parent = targetCity.transform;
-		pullMe = newDisease;
-		pullMe.GetComponent<Attraction>().pullSource = targetCity;
+		for (int i = 0; i < infectCount; i++)
+		{
+            //add offset to position
+            float x = (float)UnityEngine.Random.Range(-30, 30);
+            x = x / 3f + Mathf.Sign(x) * 20f;
+            float y = (float)UnityEngine.Random.Range(-30, 30);
+            y = y / 3f + Mathf.Sign(y) * 20f;
+            cityPosition += new Vector3(x / 100f, y / 100f, 0);
+            var newDisease = Instantiate(diseaseType, cityPosition, targetCity.transform.rotation);
+            newDisease.transform.parent = targetCity.transform;
+            newDisease.GetComponent<Attraction>().pullSource = targetCity;
+        }
+		if (outbreak && !cg.GetNode(targetCity.name).hasOutbreak)
+        {
+            cg.GetNode(targetCity.name).hasOutbreak = true;
+			//set self as having outbreak
+            //find neighbors and add infect 1 to each of them
+            var neighbors = cg.GetNeighbors(targetCity.name);
+            foreach (var node in neighbors)
+            {
+                Debug.Log("Infecting Neighbor: " + node.GetObj().name);
+				InfectCity(node.GetObj(), 1, type);
+            }
+        }
     }
 	void MouseDrag(GameObject obj)
 	{
@@ -195,7 +196,11 @@ public class Common : MonoBehaviour {
         {
             firstClicked = false;
 
-			obj.GetComponent<Card>().SetTopMost();
+			{
+                var card = obj.GetComponent<Card>();
+                if (card)
+                    card.SetTopMost();
+            }
             
             //remember offset so card doesn't jump to cursor location
             offset = obj.transform.position - point;

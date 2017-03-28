@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114784183014758156}
   m_Layer: 0
   m_Name: disease_blue
-  m_TagString: Untagged
+  m_TagString: disease
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

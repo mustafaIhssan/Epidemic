@@ -13,8 +13,6 @@ public class Attraction : MonoBehaviour {
 	void Update () {
 		if (pullSource == null) return;
 
-		Debug.Log("pulling!");
-		//continue
 		var dir = pullSource.transform.position - transform.position;
 		var dist2 = dir.sqrMagnitude;
 		var vel = dir.normalized * 8f *dist2;

@@ -5,6 +5,7 @@ using System;
 
 
 public static class Cities {
+    
 	public static List<List<string>> GetCityLists() {
 		List<List<string>> types = new List<List<string>>();
 		types.Add(blue);
