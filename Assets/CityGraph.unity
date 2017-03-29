@@ -4492,6 +4492,8 @@ MonoBehaviour:
   blue: {fileID: 1944645562490534, guid: 6669f87e38829441b845cddda61f1843, type: 2}
   black: {fileID: 1402600230479884, guid: 0d5f445373e004bf1959aed4e671ebc2, type: 2}
   yellow: {fileID: 1344527414991886, guid: 63c09a971695a45edb88a6bac776a6da, type: 2}
+  epidemic: {fileID: 1182168273076364, guid: b232cfb25c91e4571a53381d95e87c01, type: 2}
+  numPlayer: 2
 --- !u!1 &1660883565
 GameObject:
   m_ObjectHideFlags: 0
@@ -5794,6 +5796,8 @@ MonoBehaviour:
   blue: {fileID: 1217586732276376, guid: 7be0baab0c9154ea9b4caf0c82c2927d, type: 2}
   black: {fileID: 1136422962711538, guid: 809fc9cfeb64d4a39933454d6ffb4aee, type: 2}
   yellow: {fileID: 1997734613805122, guid: ea4505b9014d5423ca15f3b08c83ec00, type: 2}
+  epidemic: {fileID: 0}
+  numPlayer: 2
 --- !u!61 &2108201796
 BoxCollider2D:
   m_ObjectHideFlags: 0

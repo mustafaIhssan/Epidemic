@@ -134,8 +134,7 @@ public class Common : MonoBehaviour {
             }
         }
 		InfectCity(targetCity, infectCount);
-	}
-	void InfectCity(GameObject targetCity, int infectCount=1, string type=null)
+	}	void InfectCity(GameObject targetCity, int infectCount=1, string type=null)
 	{
         if (targetCity == null)
         {

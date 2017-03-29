@@ -9,12 +9,20 @@ public class PlayerDeck : MonoBehaviour {
 	public GameObject epidemic;
 	public int numPlayer = 2;
 	// Use this for initialization
+	public int CardsPerPlayer(int numPlayer)
+	{
+		int ret = 0;
+		if (numPlayer == 1) ret = 4;
+		else if (numPlayer == 2) ret = 4;
+		else if (numPlayer == 3) ret = 3;
+		else if (numPlayer == 4) ret = 2;
+		else Debug.Log("invalid # of players, must be [1-4]");
+		
+		return ret;
+	}
 	public virtual void Start () {
 		InitDeck();
-		if (gameObject.name == "playerdec")
-		{
-			InitPlayerDeck();
-		}
+		
 	}
 	public List<string> GetDeck() { return deck; }
 	public void InitDeck() {
@@ -40,7 +48,7 @@ public class PlayerDeck : MonoBehaviour {
 
 		//sanity checked
 		int numSinceLastE = 0;
-		for (int i = 0; i < deck.Count; numSinceLastE++, i++)
+		for (int i = deck.Count - 1; i >= 0; numSinceLastE++, i--)
 		{
             if (deck[i] == "Epidemic")
             {
@@ -63,16 +71,22 @@ public class PlayerDeck : MonoBehaviour {
 
 	   return red;
    }
-   //auto remove card from deck
-   public virtual GameObject Draw() { 
-	   var ret = Draw(deck, 0);
-	   if (deck.Count > 0)
-	   {
-		   deck.RemoveAt(deck.Count-1);
-	   }
-	   return ret;
-   }
-   public GameObject Draw(int lastOffset) {
+    //auto remove card from deck
+    public virtual GameObject Draw()
+    {
+        var ret = Draw(deck, 0);
+        if (deck.Count > 0)
+        {
+            deck.RemoveAt(deck.Count - 1);
+        }
+        if (gameObject.name == "playerdec"
+          && (48 - deck.Count) >= numPlayer * CardsPerPlayer(numPlayer))
+        {
+            InitPlayerDeck();
+        }
+        return ret;
+    }
+    public GameObject Draw(int lastOffset) {
 	   var ret = Draw(deck, lastOffset);
         if (deck.Count > 0)
 	   {
@@ -84,8 +98,10 @@ public class PlayerDeck : MonoBehaviour {
         var txtObj = obj.transform.FindChild("text");
         return txtObj.GetComponent<TextMesh>().text;
    }
+   int numCardsDrawn = 0;
     public GameObject Draw(List<string> deck, int lastOffset)
     {
+		
         GameObject newCard = null;
         //if not empty, spawn a new card on top, with offset?
         if (deck.Count > 0)

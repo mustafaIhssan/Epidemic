@@ -19,10 +19,14 @@ public class Card : MonoBehaviour {
         render.sortingOrder = num;
 
 		//also set text render order
-        var tRender = gameObject.transform.FindChild("text").GetComponent<Renderer>();
-        if (tRender != null)
-        {
-            tRender.sortingOrder = num;
+		var text = gameObject.transform.FindChild("text");
+		if (text != null)
+		{
+            var tRender = text.GetComponent<Renderer>();
+            if (tRender != null)
+            {
+                tRender.sortingOrder = num;
+            }
         }
 	}
 	// Update is called once per frame
