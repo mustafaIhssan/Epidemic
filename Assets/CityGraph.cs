@@ -34,7 +34,7 @@ public class Node {
 public class CityGraph : MonoBehaviour {
 	Dictionary<string, Node> cities = new Dictionary<string, Node>();
 	Node dummy;
-	// Use this for initialization
+	GameObject outbreakToken, outbreaks;
 	void Start () {
 		dummy = new Node(transform.gameObject);
         //get list of all cities
@@ -50,15 +50,54 @@ public class CityGraph : MonoBehaviour {
 			child.tag = "NoDrag";
 		}
 		InitGraph();
+		outbreakToken = GameObject.Find("outbreak_token");
+		if (outbreakToken == null)
+		{ Debug.Log("can't find outbreak token!");}
+		outbreaks = GameObject.Find("Outbreaks");
+		if (outbreaks == null)
+		{ Debug.Log("can't find outbreaks!");}
 	}
-	
 	// Update is called once per frame
+	bool animateFlag = false;
+	int numOutbreaks = 0;
+	float moveTime = 0;
+	GameObject moveDest;
 	void Update () {
 		foreach(var item in cities)
 		{
+			//if has outbreak, move marker!
+			if (item.Value.hasOutbreak)
+			{
+				numOutbreaks++;
+                if (numOutbreaks > 7)
+                {
+                    Debug.Log("GAME OVER");
+					numOutbreaks = 8;
+                }
+				animateFlag = true;
+				moveTime = Time.time;
+				//get target
+				moveDest = outbreaks.transform.Find(numOutbreaks.ToString()).gameObject;
+			}
+
 			item.Value.hasOutbreak = false;
 		}
+		if (animateFlag) animate();
 	}
+    void animate()
+    {
+		if (moveDest == null) return;
+        float duration = 1f;
+        float progress = (Time.time - moveTime) / duration;
+        if (progress > 1)
+        {
+            animateFlag = false;
+			return;
+        }
+
+        var newPos = (1 - progress) * outbreakToken.transform.position + progress * moveDest.transform.position;
+        outbreakToken.transform.position = newPos;
+    }
 
 	public List<Node> GetNeighbors(GameObject input) {
 		return GetNeighbors(input.name);
@@ -120,6 +159,7 @@ public class CityGraph : MonoBehaviour {
 		cities["Buenos Aires"].Add(cities["Sao Paulo"]);
 		cities["Buenos Aires"].Add(cities["Johannesburg"]);
 
+		cities["Lagos"].Add(cities["Sao Paulo"]);
 		cities["Lagos"].Add(cities["Khartoum"]);
 		cities["Lagos"].Add(cities["Kinshasa"]);
 
@@ -151,6 +191,7 @@ public class CityGraph : MonoBehaviour {
 		cities["London"].Add(cities["Essen"]);
 		
 		cities["Madrid"].Add(cities["Paris"]);
+		cities["Madrid"].Add(cities["Sao Paulo"]);
 		
 		cities["Paris"].Add(cities["Essen"]);
 		cities["Paris"].Add(cities["Milan"]);
