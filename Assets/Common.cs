@@ -22,6 +22,7 @@ public class Common : MonoBehaviour {
 	GameObject mouseSelection;
 	CityGraph cg;
 	GameObject cities;
+	InfectDeck infectDec;
 	// Use this for initialization
 	void Start () {
         firstClicked = true;
@@ -31,6 +32,10 @@ public class Common : MonoBehaviour {
 		cg = cities.GetComponent<CityGraph>();
 		if (cg == null)
 			Debug.Log("Can't find citygraph!?!");
+
+        infectDec = GameObject.Find("infectDec").GetComponent<InfectDeck>();
+		if (infectDec == null)
+			Debug.Log("Can't find infectDec");
 	}
 	
 	// Update is called once per frame
@@ -69,9 +74,12 @@ public class Common : MonoBehaviour {
 				}
 				else if (mouseSelection.tag == "InfectCity") 
 				{
-					InfectCity("Madrid", 3);
+					//setup
+					SetupGame();
+					//InfectCity("Madrid", 3);
 				}
-				else if (mouseSelection.transform.parent.name == "Cities")
+				else if (mouseSelection.transform.parent != null
+					  && mouseSelection.transform.parent.name == "Cities")
 				{
 					var sr = mouseSelection.GetComponent<SpriteRenderer>();
 					selectedCity = mouseSelection;
@@ -105,6 +113,14 @@ public class Common : MonoBehaviour {
 			selectedCity = null;
 		}
     }
+	void SetupGame()
+	{
+		//draw a card from infection deck, 
+		PlayerDeck bDeck = infectDec;
+		bDeck.Draw();
+		//slide it over to discard deck
+		//spawn 3 infect on city
+	}
 	void InfectCity(string target = "Milan", int infectCount=1)
 	{
         //find location to spawn

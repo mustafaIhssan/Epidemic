@@ -17,7 +17,7 @@ public class Node {
 		{
 			Debug.Log(obj.name + " trying to add invalid node given");
 		}
-		Debug.Log(obj.name + "->" + newNode.obj.name);
+		//Debug.Log(obj.name + "->" + newNode.obj.name);
 		if (!links.Contains(newNode))
             links.Add(newNode);
 	}
