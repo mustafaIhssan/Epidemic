@@ -60,6 +60,7 @@ public class CityGraph : MonoBehaviour {
 	// Update is called once per frame
 	bool animateFlag = false;
 	int numOutbreaks = 0;
+	int curOutbreak = 0;
 	float moveTime = 0;
 	GameObject moveDest;
 	void Update () {
@@ -74,15 +75,14 @@ public class CityGraph : MonoBehaviour {
                     Debug.Log("GAME OVER");
 					numOutbreaks = 8;
                 }
-				animateFlag = true;
 				moveTime = Time.time;
 				//get target
-				moveDest = outbreaks.transform.Find(numOutbreaks.ToString()).gameObject;
+				moveDest = outbreaks.transform.Find((1+curOutbreak).ToString()).gameObject;
 			}
 
 			item.Value.hasOutbreak = false;
 		}
-		if (animateFlag) animate();
+		if (curOutbreak < numOutbreaks) animate();
 	}
     void animate()
     {
@@ -91,7 +91,9 @@ public class CityGraph : MonoBehaviour {
         float progress = (Time.time - moveTime) / duration;
         if (progress > 1)
         {
-            animateFlag = false;
+			curOutbreak++;
+            moveDest = outbreaks.transform.Find(curOutbreak.ToString()).gameObject;
+			moveTime = Time.time;
 			return;
         }
 
