@@ -7,6 +7,7 @@ public class PlayerDeck : MonoBehaviour {
 	List<string> deck;
 	public GameObject red, blue, black, yellow;
 	public GameObject epidemic;
+	InfectDeck infectDeck;
 	public int numPlayer = 2;
 	// Use this for initialization
 	public int CardsPerPlayer(int numPlayer)
@@ -21,8 +22,9 @@ public class PlayerDeck : MonoBehaviour {
 		return ret;
 	}
 	public virtual void Start () {
+		infectDeck = GameObject.Find("infectDec").GetComponent<InfectDeck>();
+		if (infectDeck == null ) Debug.Log("can't find infectDec");
 		InitDeck();
-		
 	}
 	public List<string> GetDeck() { return deck; }
 	public void InitDeck() {
@@ -71,35 +73,37 @@ public class PlayerDeck : MonoBehaviour {
 
 	   return red;
    }
+
+   public void Append(List<string> app) {
+	   deck.AddRange(app);
+   }
     //auto remove card from deck
-    public virtual GameObject Draw()
+    public virtual GameObject Draw(bool DrawFromTop=true)
     {
-        var ret = Draw(deck, 0);
+        var ret = Draw(deck, DrawFromTop);
         if (deck.Count > 0)
         {
-            deck.RemoveAt(deck.Count - 1);
+			if (DrawFromTop)
+                deck.RemoveAt(deck.Count - 1);
+			else
+                deck.RemoveAt(0);
         }
         if (gameObject.name == "playerdec"
           && (48 - deck.Count) >= numPlayer * CardsPerPlayer(numPlayer))
         {
+			//insert epidemic cards 
             InitPlayerDeck();
         }
         return ret;
     }
-    public GameObject Draw(int lastOffset) {
-	   var ret = Draw(deck, lastOffset);
-        if (deck.Count > 0)
-	   {
-		   deck.RemoveAt(deck.Count-1);
-	   }
-	   return ret;
-   }
+    
    public string GetNameOfCard(GameObject obj) {
         var txtObj = obj.transform.FindChild("text");
         return txtObj.GetComponent<TextMesh>().text;
    }
    int numCardsDrawn = 0;
-    public GameObject Draw(List<string> deck, int lastOffset)
+   //just return card, no removal
+    public GameObject Draw(List<string> deck, bool DrawFromTop=true)
     {
 		
         GameObject newCard = null;
@@ -107,12 +111,16 @@ public class PlayerDeck : MonoBehaviour {
         if (deck.Count > 0)
         {
             //spawn a new card on top
-            var cardDrawn = deck[deck.Count - 1 - lastOffset];
+			int idx = 0;
+			if (DrawFromTop) { idx = deck.Count - 1; }
+            var cardDrawn = deck[idx];
             var type = Cities.GetType(cardDrawn);
             Debug.Log("Got a card: " + cardDrawn + " and type: " + type);
-            if (cardDrawn == "Epidemic")
+       //     if (cardDrawn == "Epidemic" && 
+			if (gameObject.name == "playerdec")
             {
                 newCard = Instantiate(epidemic, transform.position, transform.rotation);
+				infectDeck.Epidemic();
             }
             else if (type == "invalid")
             {
@@ -131,9 +139,10 @@ public class PlayerDeck : MonoBehaviour {
                 newCard.transform.Translate(new Vector3(0, 0, -1));
                 var newOrder = newCard.GetComponent<Card>().SetTopMost();
                 var txtObj = newCard.transform.FindChild("text");
-                txtObj.GetComponent<TextMesh>().text = cardDrawn;
+				if (txtObj != null)
+                    txtObj.GetComponent<TextMesh>().text = cardDrawn;
 
-                Debug.Log("Spawned a new card with order # " + newOrder);
+                //Debug.Log("Spawned a new card with order # " + newOrder);
             }
         }
         else

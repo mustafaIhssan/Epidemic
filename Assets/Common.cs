@@ -60,22 +60,23 @@ public class Common : MonoBehaviour {
 				//onMouseDown
                 Debug.Log("picked: " + mouseSelection.gameObject);
 				var deck = mouseSelection.GetComponent<PlayerDeck>();
-				var infectDeck = mouseSelection.GetComponent<InfectDeck>();
-				if (deck != null)
-				{
-					deck.Draw();
-					return;
-				}
-				else if (infectDeck != null)
+                var infectDeck = mouseSelection.GetComponent<InfectDeck>();
+                if (infectDeck != null)
 				{
 					Debug.Log("Got infect deck");
 					PlayerDeck bDeck = infectDeck;
 					bDeck.Draw();
+				} else if (deck != null)
+				{
+					Debug.Log("picked playerDeck");
+					deck.Draw();
+					return;
 				}
 				else if (mouseSelection.tag == "InfectCity") 
 				{
 					//setup
-					SetupGame();
+					//SetupGame();
+
 					//InfectCity("Madrid", 3);
 				}
 				else if (mouseSelection.transform.parent != null
