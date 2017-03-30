@@ -23,6 +23,7 @@ public class Common : MonoBehaviour {
 	CityGraph cg;
 	GameObject cities;
 	InfectDeck infectDec;
+	Players pawns;
 	// Use this for initialization
 	void Start () {
         firstClicked = true;
@@ -32,6 +33,10 @@ public class Common : MonoBehaviour {
 		cg = cities.GetComponent<CityGraph>();
 		if (cg == null)
 			Debug.Log("Can't find citygraph!?!");
+
+        pawns = GameObject.Find("Pawns").GetComponent<Players>();
+		if (pawns == null)
+			Debug.Log("Can't find Pawns");
 
         infectDec = GameObject.Find("infectDec").GetComponent<InfectDeck>();
 		if (infectDec == null)
@@ -61,7 +66,10 @@ public class Common : MonoBehaviour {
                 Debug.Log("picked: " + mouseSelection.gameObject);
 				var deck = mouseSelection.GetComponent<PlayerDeck>();
                 var infectDeck = mouseSelection.GetComponent<InfectDeck>();
-                if (infectDeck != null)
+				if (mouseSelection.tag == "Player")
+				{
+					//no need to record position, just move back to parent on illegal move
+				} else if (infectDeck != null)
 				{
 					Debug.Log("Got infect deck");
 					PlayerDeck bDeck = infectDeck;
@@ -69,6 +77,8 @@ public class Common : MonoBehaviour {
 				} else if (deck != null)
 				{
 					Debug.Log("picked playerDeck");
+					if (pawns.ExitSetup() == false)
+						return;
 					deck.Draw();
 					return;
 				}
@@ -97,22 +107,45 @@ public class Common : MonoBehaviour {
 			}
         } else if (Input.GetMouseButton(0)) 
 		{
-				MouseDrag(mouseSelection);
+            //check if player's turn yet
+            if (mouseSelection.tag == "Player" 
+			&& pawns.CanSelectPawn(mouseSelection) == false)
+			{
+				return;
+			}
+            MouseDrag(mouseSelection);
+			//TODO how to check if pawn collided with city?
+			if (false) //pawn collided with city
+			{
+                //selectedCity = city;
+                //if (CanMoveToCity(mouseSelection, city) == true)
+                //  sr.color = new Color(.1f, 1f, .1f, 1f); //bright green
+				//else
+                //  sr.color = new Color(1f, .1f, .1f, 1f); //bright red
+            } else {
+				//pawn not collided with city
+				DeselectCity();
+				selectedCity = null;
+			}
         }
         else //if (Input.GetMouseButtonUp(0))
         {
-			if (selectedCity != null)
-			{
-				Debug.Log("changing city color back to white");
-                var sr = selectedCity.GetComponent<SpriteRenderer>();
-                sr.color = Color.white;
-			}
+			DeselectCity();
 			//clean up
             Cursor.visible = true;
             firstClicked = true;
 			mouseSelection = null;
 			selectedCity = null;
 		}
+    }
+	void DeselectCity()
+	{
+        if (selectedCity != null)
+        {
+            Debug.Log("changing city color back to white");
+            var sr = selectedCity.GetComponent<SpriteRenderer>();
+            sr.color = Color.white;
+        }
     }
 	void SetupGame()
 	{

@@ -75,14 +75,10 @@ public class InfectDeck : PlayerDeck {
 			//var e = animateQueue[i];
             float duration = 1f;
             float progress = (Time.time - e.startTime) / duration;
-			Debug.Log("dest: " + e.dest.name);
-			Debug.Log("time: " + Time.time + " start time: " + e.startTime);
-			Debug.Log("src: " + e.src.name);
             if (progress > 1)
 			{
-				Debug.Log("animation over for " + e.src.name + " -> " + e.dest.name);
+				//Debug.Log("animation over for " + e.src.name + " -> " + e.dest.name);
 				elemToRemove.Add(e);
-				Debug.Log("remove queue size: " + elemToRemove.Count);
 				continue;
 			}
                 
@@ -90,10 +86,9 @@ public class InfectDeck : PlayerDeck {
             var newPos = (1 - progress) * e.src.transform.position + progress * e.dest.transform.position;
             e.src.transform.position = newPos;
         }
-        Debug.Log("out of anim loop remove queue size: " + elemToRemove.Count);
 		foreach(var elem in elemToRemove)
 		{
-			Debug.Log("removing item: " + elem);//.src.name);
+			//Debug.Log("removing item: " + elem);//.src.name);
 			animateQueue.Remove(elem);
 		}
 		if (rdFlag == true && animateQueue.Count == 0)

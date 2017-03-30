@@ -1379,11 +1379,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4439230119828230, guid: 982b14084244640c295b2451171c53af, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.86
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 4439230119828230, guid: 982b14084244640c295b2451171c53af, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.07
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 4439230119828230, guid: 982b14084244640c295b2451171c53af, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1408,6 +1408,10 @@ Prefab:
     - target: {fileID: 4439230119828230, guid: 982b14084244640c295b2451171c53af, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1171782315462104, guid: 982b14084244640c295b2451171c53af, type: 2}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 65609554131580552, guid: 982b14084244640c295b2451171c53af, type: 2}
@@ -2277,11 +2281,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4787822816902190, guid: c7c859bf2071745058a459a558ee00e2, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.89
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 4787822816902190, guid: c7c859bf2071745058a459a558ee00e2, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.65
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4787822816902190, guid: c7c859bf2071745058a459a558ee00e2, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2307,6 +2311,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1166096293462000, guid: c7c859bf2071745058a459a558ee00e2, type: 2}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c7c859bf2071745058a459a558ee00e2, type: 2}
   m_IsPrefabParent: 0
@@ -2320,6 +2328,11 @@ GameObject:
   m_PrefabParentObject: {fileID: 1166940591972516, guid: b4b301305f641416ab9ea10e779ea9bb,
     type: 2}
   m_PrefabInternal: {fileID: 207481127}
+--- !u!1 &1010888484 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1136422962711538, guid: 809fc9cfeb64d4a39933454d6ffb4aee,
+    type: 2}
+  m_PrefabInternal: {fileID: 1287582367}
 --- !u!1 &1031395219
 GameObject:
   m_ObjectHideFlags: 0
@@ -3777,11 +3790,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4403280533127600, guid: afc6f9c4cdc3a40cd8d38e5d224aef3e, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.67
+      value: 0.31
       objectReference: {fileID: 0}
     - target: {fileID: 4403280533127600, guid: afc6f9c4cdc3a40cd8d38e5d224aef3e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.67
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4403280533127600, guid: afc6f9c4cdc3a40cd8d38e5d224aef3e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3806,6 +3819,10 @@ Prefab:
     - target: {fileID: 4403280533127600, guid: afc6f9c4cdc3a40cd8d38e5d224aef3e, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343986446396348, guid: afc6f9c4cdc3a40cd8d38e5d224aef3e, type: 2}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afc6f9c4cdc3a40cd8d38e5d224aef3e, type: 2}
@@ -4140,11 +4157,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4099453748329170, guid: bf317d5b44663443f97740a28f2e7a30, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -2.73
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4099453748329170, guid: bf317d5b44663443f97740a28f2e7a30, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0.87
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: 4099453748329170, guid: bf317d5b44663443f97740a28f2e7a30, type: 2}
       propertyPath: m_LocalPosition.z
@@ -4169,6 +4186,10 @@ Prefab:
     - target: {fileID: 4099453748329170, guid: bf317d5b44663443f97740a28f2e7a30, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393541603337604, guid: bf317d5b44663443f97740a28f2e7a30, type: 2}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bf317d5b44663443f97740a28f2e7a30, type: 2}
@@ -4680,6 +4701,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1684630588}
+  - component: {fileID: 1684630589}
+  - component: {fileID: 1684630590}
   m_Layer: 5
   m_Name: Pawns
   m_TagString: Untagged
@@ -4706,9 +4729,35 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -7.13, y: 0.67}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1684630589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1684630587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce27b63ffb30d4ae2ab0875025f4064c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setup: 1
+--- !u!58 &1684630590
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1684630587}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.2
 --- !u!1 &1692843609
 GameObject:
   m_ObjectHideFlags: 0
@@ -5816,7 +5865,7 @@ MonoBehaviour:
   blue: {fileID: 1217586732276376, guid: 7be0baab0c9154ea9b4caf0c82c2927d, type: 2}
   black: {fileID: 1136422962711538, guid: 809fc9cfeb64d4a39933454d6ffb4aee, type: 2}
   yellow: {fileID: 1997734613805122, guid: ea4505b9014d5423ca15f3b08c83ec00, type: 2}
-  epidemic: {fileID: 1182168273076364, guid: b232cfb25c91e4571a53381d95e87c01, type: 2}
+  epidemic: {fileID: 1010888484}
   numPlayer: 2
 --- !u!61 &2108201796
 BoxCollider2D:

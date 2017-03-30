@@ -77,6 +77,7 @@ public class CityGraph : MonoBehaviour {
                 }
 				moveTime = Time.time;
 				//get target
+				Debug.Log("moving outbreak token to " + curOutbreak);
 				moveDest = outbreaks.transform.Find((1+curOutbreak).ToString()).gameObject;
 			}
 
