@@ -53,98 +53,101 @@ public class Common : MonoBehaviour {
 	}
 	
 	int playerCardsDrawn = 0;
+	void MouseDown(GameObject mouseSelection)
+    {
+        mouseSelection = CheckForObjectUnderMouse();
+        if (mouseSelection == null)
+        {
+            Debug.Log("nothing selected by mouse");
+        }
+        else
+        {
+            //onMouseDown
+            //Debug.Log("picked: " + mouseSelection.gameObject);
+            var deck = mouseSelection.GetComponent<PlayerDeck>();
+            var infectDeck = mouseSelection.GetComponent<InfectDeck>();
+            if (mouseSelection.tag == "Player")
+            {
+                //no need to record position, just move back to parent on illegal move
+            }
+            else if (infectDeck != null)
+            {
+                Debug.Log("Got infect deck");
+                PlayerDeck bDeck = infectDeck;
+                //if <= 9 cards drawn OR no longer in setup mode
+                if (playerCardsDrawn <= 9 || pawns.ExitSetup(false))
+                {
+                    playerCardsDrawn++;
+                    bDeck.Draw();
+                }
+            }
+            else if (deck != null)
+            {
+                Debug.Log("picked playerDeck");
+                if (pawns.ExitSetup(true) == false)
+                {
+                    Debug.Log("Can't draw cards until players chosen");
+                    return;
+                }
+                deck.Draw();
+                return;
+            }
+            else if (mouseSelection.tag == "InfectCity")
+            {
+                //setup
+                //SetupGame();
+
+                //InfectCity("Madrid", 3);
+            }
+            else if (mouseSelection.transform.parent != null
+                  && mouseSelection.transform.parent.name == "Cities")
+            {
+                var sr = mouseSelection.GetComponent<SpriteRenderer>();
+                selectedCity = mouseSelection;
+                sr.color = new Color(.1f, 1f, .1f, 1f); //bright green
+                Debug.Log("clicked on city: " + mouseSelection.name);
+                var neighbors = cg.GetNeighbors(mouseSelection);
+                foreach (var node in neighbors)
+                {
+                    Debug.Log("Neighbor: " + node.GetObj().name);
+                }
+                //testing
+                var cube = GameObject.Find("disease_blue");
+                InfectCity(mouseSelection, 1);
+            }
+        }
+    }
+    GameObject FindOverCity()
+    {
+        Vector2 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Collider2D[] col = Physics2D.OverlapPointAll(v);
+
+        foreach (Collider2D c in col)
+        {
+            //Debug.Log("Collided with: " + c.gameObject.name + " tag: " + c.gameObject.tag);
+            if (c.gameObject.tag == "City")
+            {
+                //Debug.Log("Collided with city: " + c.gameObject.name);
+                return c.gameObject;
+            }
+        }
+        return null;
+    }
 	void MouseUpdate()
 	{
         if(Input.GetMouseButtonDown(0))
-        {
-            mouseSelection = CheckForObjectUnderMouse();
-            if(mouseSelection == null)
-			{
-                Debug.Log("nothing selected by mouse");
-			}
-            else {
-				//onMouseDown
-                //Debug.Log("picked: " + mouseSelection.gameObject);
-				var deck = mouseSelection.GetComponent<PlayerDeck>();
-                var infectDeck = mouseSelection.GetComponent<InfectDeck>();
-				if (mouseSelection.tag == "Player")
-				{
-					//no need to record position, just move back to parent on illegal move
-				} else if (infectDeck != null)
-				{
-					Debug.Log("Got infect deck");
-					PlayerDeck bDeck = infectDeck;
-					//if <= 9 cards drawn OR no longer in setup mode
-					if (playerCardsDrawn <= 9 || pawns.ExitSetup(false))
-					{
-                        playerCardsDrawn++;
-                        bDeck.Draw();
-                    }
-				} else if (deck != null)
-				{
-					Debug.Log("picked playerDeck");
-					if (pawns.ExitSetup(true) == false)
-					{
-						Debug.Log("Can't draw cards until players chosen");
-						return;
-					}
-					deck.Draw();
-					return;
-				}
-				else if (mouseSelection.tag == "InfectCity") 
-				{
-					//setup
-					//SetupGame();
-
-					//InfectCity("Madrid", 3);
-				}
-				else if (mouseSelection.transform.parent != null
-					  && mouseSelection.transform.parent.name == "Cities")
-				{
-					var sr = mouseSelection.GetComponent<SpriteRenderer>();
-					selectedCity = mouseSelection;
-					sr.color = new Color(.1f, 1f, .1f, 1f); //bright green
-					Debug.Log("clicked on city: " + mouseSelection.name);
-					var neighbors = cg.GetNeighbors(mouseSelection);
-					foreach (var node in neighbors) {
-						Debug.Log("Neighbor: " + node.GetObj().name);
-					}
-					//testing
-					var cube = GameObject.Find("disease_blue");
-					InfectCity(mouseSelection, 1);
-				}
-			}
-        } else if (Input.GetMouseButton(0)) 
 		{
-            //check if player's turn yet
-			//moving an object
-			if (mouseSelection == null) return;
-            if (mouseSelection.tag == "Player" 
-			&& pawns.CanSelectPawn(mouseSelection) == false)
-			{
-				Debug.Log("Not your turn yet!"); //how many turns to wait?
-				return;
-			}
+			//first frame where left mouse button is clicked
+			MouseDown(mouseSelection);
+		} else if (Input.GetMouseButton(0)) 
+		{
+			//subseqpent frames where left mouse button is still held down
             MouseDrag(mouseSelection);
 
-			//check if mouse over city
-            Vector2 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Collider2D[] col = Physics2D.OverlapPointAll(v);
-
-			bool overCity = false;
-            foreach (Collider2D c in col)
+            //check if mouse over city
+            selectedCity = FindOverCity();
+            if (selectedCity != null) //mouse dragged over city while dragging something
             {
-                //Debug.Log("Collided with: " + c.gameObject.name + " tag: " + c.gameObject.tag);
-				if (c.gameObject.tag == "City")
-				{
-                	//Debug.Log("Collided with city: " + c.gameObject.name);
-					overCity = true;
-					selectedCity = c.gameObject;
-				}
-                //targetPos = c.collider2D.gameObject.transform.position;
-            }
-			if (overCity) //mouse dragged over city while dragging something
-			{
                 //Debug.Log("2Collided with: " + selectedCity.name);
                 //selectedCity = city;
                 var sr = selectedCity.GetComponent<SpriteRenderer>();
@@ -157,7 +160,6 @@ public class Common : MonoBehaviour {
             } else {
 				//pawn not collided with city
 				DeselectCity();
-				selectedCity = null;
 			}
         }
         else //if (Input.GetMouseButtonUp(0))
@@ -271,7 +273,15 @@ public class Common : MonoBehaviour {
     }
 	void MouseDrag(GameObject obj)
 	{
-		if (obj == null) return;
+        //check if player's turn yet
+        //moving an object
+        if (obj == null) return;
+        if (obj.tag == "Player"
+        && pawns.CanSelectPawn(obj) == false)
+        {
+            Debug.Log("Not your turn yet!"); //how many turns to wait?
+            return;
+        }
 		if (obj.tag == "City") return;
 
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
