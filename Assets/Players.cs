@@ -91,5 +91,19 @@ public class Players : MonoBehaviour {
 		//until first card is drawn, setup will be true
 		//monitor location of pawns, if one is moved to atlanta, 
 		//move it to be a child of atlanta and incr players in game
+
+		//force pawn back to its city if it has one
+		foreach(var pawn in pawns)
+		{
+			if (pawn.transform.parent.tag == "City")
+			{
+				float progress = (4 * Time.deltaTime);
+				var parentPos = pawn.transform.parent.transform.position;	
+				if ((parentPos - pawn.transform.position).sqrMagnitude < .1f)
+					continue;
+				var newPos = (1-progress) * pawn.transform.position + progress * parentPos;
+				pawn.transform.position = newPos;
+			}
+		}
 	}
 }
