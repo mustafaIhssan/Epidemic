@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 12794926}
   m_Layer: 5
   m_Name: Madrid
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 32744898}
   m_Layer: 5
   m_Name: Khartoum
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 122113202}
   m_Layer: 5
   m_Name: Miami
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -466,7 +466,7 @@ GameObject:
   - component: {fileID: 171119240}
   m_Layer: 5
   m_Name: Lagos
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 209012966}
   m_Layer: 5
   m_Name: Beijing
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -666,7 +666,7 @@ GameObject:
   - component: {fileID: 210682990}
   m_Layer: 5
   m_Name: Tokyo
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -745,7 +745,7 @@ GameObject:
   - component: {fileID: 217484192}
   m_Layer: 5
   m_Name: Mumbai
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -852,7 +852,7 @@ GameObject:
   - component: {fileID: 350479636}
   m_Layer: 5
   m_Name: Sao Paulo
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -931,7 +931,7 @@ GameObject:
   - component: {fileID: 352444726}
   m_Layer: 5
   m_Name: Bangkok
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1047,6 +1047,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1966763387367202, guid: 753daa21411b8466ca0e9bf50ea52a09, type: 2}
+      propertyPath: m_TagString
+      value: City
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 753daa21411b8466ca0e9bf50ea52a09, type: 2}
   m_IsPrefabParent: 0
@@ -1062,7 +1066,7 @@ GameObject:
   - component: {fileID: 453329982}
   m_Layer: 5
   m_Name: San Francisco
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1409,12 +1413,28 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1171782315462104, guid: 982b14084244640c295b2451171c53af, type: 2}
-      propertyPath: m_TagString
-      value: Player
+    - target: {fileID: 50699647111208008, guid: 982b14084244640c295b2451171c53af,
+        type: 2}
+      propertyPath: m_Simulated
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50699647111208008, guid: 982b14084244640c295b2451171c53af,
+        type: 2}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 50699647111208008, guid: 982b14084244640c295b2451171c53af,
+        type: 2}
+      propertyPath: m_LinearDrag
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 50699647111208008, guid: 982b14084244640c295b2451171c53af,
+        type: 2}
+      propertyPath: m_AngularDrag
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 65609554131580552, guid: 982b14084244640c295b2451171c53af, type: 2}
+    - {fileID: 50699647111208008, guid: 982b14084244640c295b2451171c53af, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 982b14084244640c295b2451171c53af, type: 2}
   m_IsPrefabParent: 0
 --- !u!4 &691434916 stripped
@@ -1498,7 +1518,7 @@ GameObject:
   - component: {fileID: 782092469}
   m_Layer: 5
   m_Name: Essen
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1577,7 +1597,7 @@ GameObject:
   - component: {fileID: 789178914}
   m_Layer: 5
   m_Name: Los Angeles
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1656,7 +1676,7 @@ GameObject:
   - component: {fileID: 792513422}
   m_Layer: 5
   m_Name: Sydney
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1735,7 +1755,7 @@ GameObject:
   - component: {fileID: 827843334}
   m_Layer: 5
   m_Name: Johannesburg
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1814,7 +1834,7 @@ GameObject:
   - component: {fileID: 828106628}
   m_Layer: 5
   m_Name: Ho Chi Minh City
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1963,7 +1983,7 @@ GameObject:
   - component: {fileID: 874151500}
   m_Layer: 5
   m_Name: Manila
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2205,7 +2225,7 @@ GameObject:
   - component: {fileID: 942437600}
   m_Layer: 5
   m_Name: Buenos Aires
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2373,7 +2393,7 @@ GameObject:
   - component: {fileID: 1038669265}
   m_Layer: 5
   m_Name: New York
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2485,7 +2505,7 @@ GameObject:
   - component: {fileID: 1125980766}
   m_Layer: 5
   m_Name: Karachi
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2564,7 +2584,7 @@ GameObject:
   - component: {fileID: 1168582373}
   m_Layer: 5
   m_Name: Osaka
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2643,7 +2663,7 @@ GameObject:
   - component: {fileID: 1215749665}
   m_Layer: 5
   m_Name: Jakarta
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2722,7 +2742,7 @@ GameObject:
   - component: {fileID: 1257154248}
   m_Layer: 5
   m_Name: Riyadh
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2907,25 +2927,6 @@ MonoBehaviour:
   dRed: {fileID: 0}
   dBlack: {fileID: 0}
   dYellow: {fileID: 0}
---- !u!1 &1299214314 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1171782315462104, guid: 982b14084244640c295b2451171c53af,
-    type: 2}
-  m_PrefabInternal: {fileID: 691434915}
---- !u!61 &1299214315
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1299214314}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 2.54, y: 3.8}
 --- !u!1 &1300765089
 GameObject:
   m_ObjectHideFlags: 0
@@ -2938,7 +2939,7 @@ GameObject:
   - component: {fileID: 1300765092}
   m_Layer: 5
   m_Name: St. Petersburg
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3017,7 +3018,7 @@ GameObject:
   - component: {fileID: 1313691258}
   m_Layer: 5
   m_Name: Shanghai
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3096,7 +3097,7 @@ GameObject:
   - component: {fileID: 1333963315}
   m_Layer: 5
   m_Name: Baghdad
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3279,7 +3280,7 @@ GameObject:
   - component: {fileID: 1365380843}
   m_Layer: 5
   m_Name: Kinshasa
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3358,7 +3359,7 @@ GameObject:
   - component: {fileID: 1367760415}
   m_Layer: 5
   m_Name: Paris
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3437,7 +3438,7 @@ GameObject:
   - component: {fileID: 1382434434}
   m_Layer: 5
   m_Name: Santiago
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3635,7 +3636,7 @@ GameObject:
   - component: {fileID: 1421034875}
   m_Layer: 5
   m_Name: Moscow
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3714,7 +3715,7 @@ GameObject:
   - component: {fileID: 1421085848}
   m_Layer: 5
   m_Name: Washington
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3844,7 +3845,7 @@ GameObject:
   - component: {fileID: 1458284858}
   m_Layer: 5
   m_Name: Chicago
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3923,7 +3924,7 @@ GameObject:
   - component: {fileID: 1476848017}
   m_Layer: 5
   m_Name: Milan
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4002,7 +4003,7 @@ GameObject:
   - component: {fileID: 1500185650}
   m_Layer: 5
   m_Name: Tehran
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4081,7 +4082,7 @@ GameObject:
   - component: {fileID: 1523244651}
   m_Layer: 5
   m_Name: Istanbul
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4547,7 +4548,7 @@ GameObject:
   - component: {fileID: 1660883568}
   m_Layer: 5
   m_Name: Hong Kong
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4626,7 +4627,7 @@ GameObject:
   - component: {fileID: 1672699112}
   m_Layer: 5
   m_Name: Taipei
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4770,7 +4771,7 @@ GameObject:
   - component: {fileID: 1692843612}
   m_Layer: 5
   m_Name: Cairo
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4877,7 +4878,7 @@ GameObject:
   - component: {fileID: 1705870489}
   m_Layer: 5
   m_Name: Algiers
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4956,7 +4957,7 @@ GameObject:
   - component: {fileID: 1736317776}
   m_Layer: 5
   m_Name: Atlanta
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5063,7 +5064,7 @@ GameObject:
   - component: {fileID: 1878609182}
   m_Layer: 5
   m_Name: Lima
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5142,7 +5143,7 @@ GameObject:
   - component: {fileID: 1913535983}
   m_Layer: 5
   m_Name: Chennai
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5221,7 +5222,7 @@ GameObject:
   - component: {fileID: 1944266873}
   m_Layer: 5
   m_Name: Mexico City
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5372,7 +5373,7 @@ GameObject:
   - component: {fileID: 2018149679}
   m_Layer: 5
   m_Name: Bogota
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5451,7 +5452,7 @@ GameObject:
   - component: {fileID: 2028830587}
   m_Layer: 5
   m_Name: Kolkata
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5558,7 +5559,7 @@ GameObject:
   - component: {fileID: 2073025751}
   m_Layer: 5
   m_Name: Delhi
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5637,7 +5638,7 @@ GameObject:
   - component: {fileID: 2075839780}
   m_Layer: 5
   m_Name: Seoul
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5716,7 +5717,7 @@ GameObject:
   - component: {fileID: 2085605977}
   m_Layer: 5
   m_Name: Montreal
-  m_TagString: Untagged
+  m_TagString: City
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

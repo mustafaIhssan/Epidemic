@@ -47,7 +47,7 @@ public class CityGraph : MonoBehaviour {
 				continue;
 			}
 			cities.Add(child.name, new Node(child));
-			child.tag = "NoDrag";
+			//child.tag = "NoDrag";
 		}
 		InitGraph();
 		outbreakToken = GameObject.Find("outbreak_token");

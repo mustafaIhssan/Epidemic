@@ -15,7 +15,12 @@ public class Players : MonoBehaviour {
 	}
 	public bool setup = true;
 	int playersInGame = 0;
-	public bool ExitSetup() {
+	public bool ExitSetup(bool playerDeck) {
+		//either playerdeck or infect deck
+		if (playerDeck == false)
+		{
+			return setup;
+		}
 		if (playersInGame > 1)
 		{
 			setup = false;
@@ -27,7 +32,32 @@ public class Players : MonoBehaviour {
 	public bool CanSelectPawn(GameObject pawn)
 	{
 		bool ret = setup;
-		//check if it's pawn's turn or a dispatcher's turn and she has moves left
+        //check if it's pawn's turn or a dispatcher's turn and she has moves left
+        if (true)
+        {
+            ret = true;
+        }
+		return ret;
+	}
+    public bool CanMoveToCity(GameObject pawn, GameObject city)
+    {
+		bool ret = setup;
+		if (setup == true)
+		{
+            //if moving to atlanta, and pawn hasn't been moved
+			Debug.Log(pawn.transform.parent.name + "." + pawn.name 
+			+ " over " + city.name);
+            if (city.name == "Atlanta" 
+		    && pawn.transform.parent.name == "Pawns")
+            {
+				return true;
+            } else {
+				return false;
+			}
+		}
+		//check if it's pawn's turn
+		//check if legal move (immediate neighbor, has the right card for flight, within turn # of neighbors)
+		//check if it's dispatcher's move and she has enough turns for above
 		return ret;
 	}
 	public bool MoveToCity(GameObject pawn, GameObject city)
@@ -36,6 +66,8 @@ public class Players : MonoBehaviour {
 		if (setup == true)
 		{
             //if moving to atlanta, and pawn hasn't been moved
+			Debug.Log(pawn.transform.parent.name + "." + pawn.name 
+			+ " over " + city.name);
             if (city.name == "Atlanta" 
 		    && pawn.transform.parent.name == "Pawns")
             {

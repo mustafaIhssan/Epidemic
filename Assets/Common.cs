@@ -24,8 +24,8 @@ public class Common : MonoBehaviour {
 	GameObject cities;
 	InfectDeck infectDec;
 	Players pawns;
-	// Use this for initialization
 	void Start () {
+		Physics.queriesHitTriggers = true;
         firstClicked = true;
 		cities = GameObject.Find("Cities");
 		if (cities == null)
@@ -52,6 +52,7 @@ public class Common : MonoBehaviour {
 		//PullAnimation();
 	}
 	
+	int playerCardsDrawn = 0;
 	void MouseUpdate()
 	{
         if(Input.GetMouseButtonDown(0))
@@ -63,7 +64,7 @@ public class Common : MonoBehaviour {
 			}
             else {
 				//onMouseDown
-                Debug.Log("picked: " + mouseSelection.gameObject);
+                //Debug.Log("picked: " + mouseSelection.gameObject);
 				var deck = mouseSelection.GetComponent<PlayerDeck>();
                 var infectDeck = mouseSelection.GetComponent<InfectDeck>();
 				if (mouseSelection.tag == "Player")
@@ -73,12 +74,20 @@ public class Common : MonoBehaviour {
 				{
 					Debug.Log("Got infect deck");
 					PlayerDeck bDeck = infectDeck;
-					bDeck.Draw();
+					//if <= 9 cards drawn OR no longer in setup mode
+					if (playerCardsDrawn <= 9 || pawns.ExitSetup(false))
+					{
+                        playerCardsDrawn++;
+                        bDeck.Draw();
+                    }
 				} else if (deck != null)
 				{
 					Debug.Log("picked playerDeck");
-					if (pawns.ExitSetup() == false)
+					if (pawns.ExitSetup(true) == false)
+					{
+						Debug.Log("Can't draw cards until players chosen");
 						return;
+					}
 					deck.Draw();
 					return;
 				}
@@ -108,20 +117,43 @@ public class Common : MonoBehaviour {
         } else if (Input.GetMouseButton(0)) 
 		{
             //check if player's turn yet
+			//moving an object
+			if (mouseSelection == null) return;
             if (mouseSelection.tag == "Player" 
 			&& pawns.CanSelectPawn(mouseSelection) == false)
 			{
+				Debug.Log("Not your turn yet!"); //how many turns to wait?
 				return;
 			}
             MouseDrag(mouseSelection);
-			//TODO how to check if pawn collided with city?
-			if (false) //pawn collided with city
+
+			//check if mouse over city
+            Vector2 v = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Collider2D[] col = Physics2D.OverlapPointAll(v);
+
+			bool overCity = false;
+            foreach (Collider2D c in col)
+            {
+                //Debug.Log("Collided with: " + c.gameObject.name + " tag: " + c.gameObject.tag);
+				if (c.gameObject.tag == "City")
+				{
+                	//Debug.Log("Collided with city: " + c.gameObject.name);
+					overCity = true;
+					selectedCity = c.gameObject;
+				}
+                //targetPos = c.collider2D.gameObject.transform.position;
+            }
+			if (overCity) //mouse dragged over city while dragging something
 			{
+                //Debug.Log("2Collided with: " + selectedCity.name);
                 //selectedCity = city;
-                //if (CanMoveToCity(mouseSelection, city) == true)
-                //  sr.color = new Color(.1f, 1f, .1f, 1f); //bright green
-				//else
-                //  sr.color = new Color(1f, .1f, .1f, 1f); //bright red
+                var sr = selectedCity.GetComponent<SpriteRenderer>();
+                if (pawns.CanMoveToCity(mouseSelection, selectedCity) == true)
+				{
+                    sr.color = new Color(.1f, 1f, .1f, 1f); //bright green
+                } else {
+                    sr.color = new Color(1f, .1f, .1f, 1f); //bright red
+                }
             } else {
 				//pawn not collided with city
 				DeselectCity();
@@ -130,6 +162,11 @@ public class Common : MonoBehaviour {
         }
         else //if (Input.GetMouseButtonUp(0))
         {
+            if (mouseSelection != null && selectedCity != null
+			&& pawns.CanMoveToCity(mouseSelection, selectedCity) == true)
+			{
+				pawns.MoveToCity(mouseSelection, selectedCity);
+			}
 			DeselectCity();
 			//clean up
             Cursor.visible = true;
@@ -235,7 +272,7 @@ public class Common : MonoBehaviour {
 	void MouseDrag(GameObject obj)
 	{
 		if (obj == null) return;
-		if (obj.tag == "NoDrag") return;
+		if (obj.tag == "City") return;
 
         Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         point.z = obj.transform.position.z;
