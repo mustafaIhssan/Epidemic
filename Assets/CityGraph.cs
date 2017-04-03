@@ -27,7 +27,7 @@ public class Node {
 		newNode.AddOneWay(this);
 	}
 	public GameObject GetObj() { return obj; }
-	List<Node> links;
+	public List<Node> links;
 	GameObject obj;
 	public bool hasOutbreak;
 }
@@ -116,6 +116,157 @@ public class CityGraph : MonoBehaviour {
 	public Node GetNode(string name) {
 		return cities[name];
 	}
+	//find shortestpath
+	void Retrace(Node src, Node tgt, ref List<List<Node>> allPaths)
+	{
+		List<Node> path = new List<Node>();
+		//iterate from last layer to 0
+		Node match = tgt;
+		Debug.Log("Retracing: ");
+		for(int index = allPaths.Count-2; index >= 0; index--)
+		{
+			//Debug.Log("Layer: " + index);
+			foreach(Node n in allPaths[index])
+			{
+				bool found = false;
+				foreach(Node l in n.links)
+				{
+					if (l == match)
+					{
+						found = true;
+						//Debug.Log(n.GetObj().name);
+						path.Add(n);
+						match = n;
+						break;
+					}
+				}
+				if (found == true)
+				{
+					break;
+				}
+			}
+		}
+		string trace = tgt.GetObj().name + "<-";
+		foreach (Node n in path) trace += n.GetObj().name + "<-";
+		Debug.Log(trace);
+	}
+	public int FindShortestDistanceToCity(GameObject source, GameObject target) {
+		//breadth first search from source
+		if (source == target) return 0;
+
+		List<Node> traversed = new List<Node>();
+		Node src = cities[source.name];
+		Node tgt = cities[target.name];
+		List<List<Node>> allPaths = new List<List<Node>>();
+		List<Node> l = new List<Node>();
+		l.Add(src);
+		allPaths.Add(l);
+
+		//iterate across layers/dist from root
+		for (int qIndex = 0; qIndex < allPaths.Count; qIndex++)
+		{
+			if (qIndex > 12) //HACK nothing should take more than 12 moves...
+				return -1;
+			//Debug.Log("Layer: " + qIndex);
+            //prepare next layer
+            allPaths.Add(new List<Node>());
+			//for each node in current layer
+            foreach (Node n in allPaths[qIndex])
+            {
+                //Debug.Log("checking src: " + n.GetObj().name);
+                foreach (Node newNode in n.links)
+                {
+					//Debug.Log("checking node: " + newNode.GetObj().name);
+                    if (newNode == tgt)
+                    {
+                        Debug.Log("target found: " + n.GetObj().name + " from " + newNode.GetObj().name);
+						Retrace(src, tgt, ref allPaths);
+                        return qIndex+1;
+                    }
+                    else
+                    {
+                        //check if l is in allPaths
+                        bool uniqueNode = true;
+                        foreach (var layer in allPaths)
+                        {
+                            foreach (Node prevNode in layer)
+                            {
+                                if (newNode == prevNode)
+                                {
+                                    uniqueNode = false;
+                                    break;
+                                }
+                            }
+                        }
+                        //push uniqueNode into next layer
+                        if (uniqueNode == true)
+                        {
+                            //check if queue available
+                            allPaths[qIndex + 1].Add(newNode);
+							//Debug.Log("adding unique node: " + newNode.GetObj().name);
+                        }
+                    }
+                }
+            }
+        }
+#if false
+		while (false)
+		{
+			foreach (Node n in current.links)
+			{
+				if (n == tgt) { 
+					Debug.Log("target found: " + n.GetObj().name + " from " + current.GetObj().name);
+					return dist; }
+				if (!q.Contains(n))
+				{
+					q.Enqueue(n);
+					
+				}
+			}
+			if (allPaths[qIndex].Count == 0)
+			{
+				Debug.Log("nodes in next layer: " + q.Count);
+				dist++;
+				numNodesCurLayer = q.Count;
+			}
+		}
+#endif
+        return -1;
+
+	}
+	int oldshortestpath(Node source, Node tgt, ref Queue<Node> q) 
+	{
+		int dist = 1; //layers
+		int numNodesCurLayer = 1;
+        string addedNodes = "";
+		while (q.Count > 0)
+		{
+			var current = q.Dequeue();
+			foreach (Node n in current.links)
+			{
+				if (n == tgt) { 
+					Debug.Log("target found: " + n.GetObj().name + " from " + current.GetObj().name);
+					return dist; }
+				if (!q.Contains(n))
+				{
+					q.Enqueue(n);
+					addedNodes = addedNodes + " " +n.GetObj().name;
+				}
+			}
+			numNodesCurLayer--;
+			if (numNodesCurLayer == 0)
+			{
+				Debug.Log("nodes in next layer: " + q.Count);
+				Debug.Log(addedNodes);
+				addedNodes = "";
+				dist++;
+				numNodesCurLayer = q.Count;
+			}
+		}
+		return -1;
+		//return FindShortestDistanceToCity(src, tgt, ref traversed);
+	}
+	
 	void InitGraph() {
 		
 

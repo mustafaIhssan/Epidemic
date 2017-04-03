@@ -22,10 +22,11 @@ public class Card : MonoBehaviour {
 		var text = gameObject.transform.FindChild("text");
 		if (text != null)
 		{
-        var tRender = text.GetComponent<Renderer>();
-        if (tRender != null)
-        {
-            tRender.sortingOrder = num;
+            var tRender = text.GetComponent<Renderer>();
+            if (tRender != null)
+            {
+                tRender.sortingOrder = num;
+            }
         }
 	}
 	// Update is called once per frame

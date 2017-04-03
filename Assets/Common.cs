@@ -53,7 +53,7 @@ public class Common : MonoBehaviour {
 	}
 	
 	int playerCardsDrawn = 0;
-	void MouseDown(GameObject mouseSelection)
+	void MouseDown(ref GameObject mouseSelection)
     {
         mouseSelection = CheckForObjectUnderMouse();
         if (mouseSelection == null)
@@ -138,18 +138,19 @@ public class Common : MonoBehaviour {
         if(Input.GetMouseButtonDown(0))
 		{
 			//first frame where left mouse button is clicked
-			MouseDown(mouseSelection);
+			MouseDown(ref mouseSelection);
 		} else if (Input.GetMouseButton(0)) 
 		{
 			//subseqpent frames where left mouse button is still held down
-            MouseDrag(mouseSelection);
+            MouseDrag(ref mouseSelection);
 
             //check if mouse over city
-            selectedCity = FindOverCity();
-            if (selectedCity != null) //mouse dragged over city while dragging something
+            var overCity = FindOverCity();
+            if (overCity != null) //mouse dragged over city while dragging something
             {
-                //Debug.Log("2Collided with: " + selectedCity.name);
-                //selectedCity = city;
+                if (selectedCity == overCity) { return; }
+                selectedCity = overCity;
+                Debug.Log("2Collided with: " + selectedCity.name);
                 var sr = selectedCity.GetComponent<SpriteRenderer>();
                 if (pawns.CanMoveToCity(mouseSelection, selectedCity) == true)
 				{
@@ -158,7 +159,7 @@ public class Common : MonoBehaviour {
                     sr.color = new Color(1f, .1f, .1f, 1f); //bright red
                 }
             } else {
-				//pawn not collided with city
+				//pawn not collided with city anymore
 				DeselectCity();
 			}
         }
@@ -169,12 +170,11 @@ public class Common : MonoBehaviour {
 			{
 				pawns.MoveToCity(mouseSelection, selectedCity);
 			}
-			DeselectCity();
+			DeselectCity(); //mouse up when over a city
 			//clean up
             Cursor.visible = true;
             firstClicked = true;
 			mouseSelection = null;
-			selectedCity = null;
 		}
     }
 	void DeselectCity()
@@ -184,6 +184,7 @@ public class Common : MonoBehaviour {
             Debug.Log("changing city color back to white");
             var sr = selectedCity.GetComponent<SpriteRenderer>();
             sr.color = Color.white;
+			selectedCity = null;
         }
     }
 	void SetupGame()
@@ -271,7 +272,7 @@ public class Common : MonoBehaviour {
             }
         }
     }
-	void MouseDrag(GameObject obj)
+	void MouseDrag(ref GameObject obj)
 	{
         //check if player's turn yet
         //moving an object
