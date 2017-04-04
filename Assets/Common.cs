@@ -185,6 +185,7 @@ public class Common : MonoBehaviour {
             var sr = selectedCity.GetComponent<SpriteRenderer>();
             sr.color = Color.white;
 			selectedCity = null;
+            cg.SetAllCityColor();
         }
     }
 	void SetupGame()

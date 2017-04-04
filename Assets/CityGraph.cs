@@ -117,7 +117,7 @@ public class CityGraph : MonoBehaviour {
 		return cities[name];
 	}
 	//find shortestpath
-	void Retrace(Node src, Node tgt, ref List<List<Node>> allPaths)
+	void Retrace(Node src, Node tgt, ref List<List<Node>> allPaths, int numMoves)
 	{
 		List<Node> path = new List<Node>();
 		//iterate from last layer to 0
@@ -147,10 +147,31 @@ public class CityGraph : MonoBehaviour {
 			}
 		}
 		string trace = tgt.GetObj().name + "<-";
-		foreach (Node n in path) trace += n.GetObj().name + "<-";
+		int numInvalid = path.Count - numMoves;
+		foreach (Node n in path) 
+		{
+			var green = new Color(.1f, 1f, .1f, 1f); //bright green
+			var red = new Color(1f, .1f, .1f, 1f); //bright red
+			var selectedCity = n.GetObj();
+            var sr = selectedCity.GetComponent<SpriteRenderer>();
+			if (numInvalid-- > 1)
+                sr.color = red;
+            else
+                sr.color = green;
+
+			trace += n.GetObj().name + "<-";
+		}
 		Debug.Log(trace);
 	}
-	public int FindShortestDistanceToCity(GameObject source, GameObject target) {
+	public void SetAllCityColor()
+	{
+		foreach (var entry in cities)
+		{
+			var sr = entry.Value.GetObj().GetComponent<SpriteRenderer>();
+			sr.color = Color.white;
+		}
+	}
+	public int FindShortestDistanceToCity(GameObject source, GameObject target, int numMoves) {
 		//breadth first search from source
 		if (source == target) return 0;
 
@@ -180,7 +201,7 @@ public class CityGraph : MonoBehaviour {
                     if (newNode == tgt)
                     {
                         Debug.Log("target found: " + n.GetObj().name + " from " + newNode.GetObj().name);
-						Retrace(src, tgt, ref allPaths);
+						Retrace(src, tgt, ref allPaths, numMoves);
                         return qIndex+1;
                     }
                     else

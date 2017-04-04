@@ -81,7 +81,7 @@ public class Players : MonoBehaviour {
             //check number of moves to city on foot
             Debug.Log("finding shortest path");
 			var pawnCity = pawn.transform.parent.gameObject;
-			int numMoves = cg.FindShortestDistanceToCity(pawnCity, city);
+			int numMoves = cg.FindShortestDistanceToCity(pawnCity, city, 4);
 			Debug.Log("Shortest path found: " + numMoves);
 			ret = (numMoves <= 4);
 
@@ -120,7 +120,7 @@ public class Players : MonoBehaviour {
 		} else {
 			//check number of moves to city
 			var pawnCity = pawn.transform.parent.gameObject;
-			int numMoves = cg.FindShortestDistanceToCity(pawnCity, city);
+			int numMoves = cg.FindShortestDistanceToCity(pawnCity, city, 4);
 			ret = (numMoves <= 4);
             pawn.transform.parent = city.transform;
 		}
